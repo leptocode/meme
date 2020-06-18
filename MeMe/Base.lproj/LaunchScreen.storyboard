@@ -26,6 +26,7 @@
                             <constraint firstItem="U1x-8Y-l5a" firstAttribute="top" secondItem="Ze5-6b-2t3" secondAttribute="topMargin" id="mao-4O-cuG"/>
                             <constraint firstAttribute="bottomMargin" secondItem="U1x-8Y-l5a" secondAttribute="bottom" id="mxh-9f-vEQ"/>
                             <constraint firstAttribute="trailingMargin" secondItem="U1x-8Y-l5a" secondAttribute="trailing" id="z3t-cl-n1e"/>
+                            <constraint firstItem="U1x-8Y-l5a" firstAttribute="centerX" secondItem="Ze5-6b-2t3" secondAttribute="centerX" id="zZ9-No-sgM"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>

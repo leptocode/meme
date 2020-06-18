@@ -27,6 +27,13 @@ UINavigationControllerDelegate, UITextFieldDelegate {
     // Bottom Text
     @IBOutlet weak var bottomText: UITextField!
     
+    // Camera Button
+    @IBOutlet weak var pickImage: UIButton!
+    
+    // Share Button
+    @IBOutlet weak var shareImage: UIButton!
+    
+    
     // MARK: vars
     var memedImage = UIImage()
     var meme:Meme!
@@ -192,6 +199,8 @@ UINavigationControllerDelegate, UITextFieldDelegate {
     
     func hideControls() {
         
+        self.pickImage.isHidden = true
+        self.shareImage.isHidden = true
         
         for view in self.view.subviews as [UIView] {
             if let button = view as? UIButton {
@@ -201,26 +210,15 @@ UINavigationControllerDelegate, UITextFieldDelegate {
     }
     
     func showControls() {
+
+        self.pickImage.isHidden = false
+        self.shareImage.isHidden = false
+
         for view in self.view.subviews as [UIView] {
             if let button = view as? UIButton {
                 button.isHidden = false
             }
         }
-    }
-
-    
-    func share() {
-        
-        
-        let memeToShare = generateMemedImage()
-        let activity = UIActivityViewController(activityItems: [memeToShare], applicationActivities: nil)
-        activity.completionWithItemsHandler = { (activity, success, items, error) in
-            
-            if success {
-                self.save(memedImage: memeToShare)
-            }
-        }
-        present(activity, animated: true, completion:nil)
     }
 
     
@@ -239,11 +237,30 @@ UINavigationControllerDelegate, UITextFieldDelegate {
         return memedImage
 
     }
+    
+    func share() {
+        
+        
+        let memeToShare = generateMemedImage()
+        let activity = UIActivityViewController(activityItems: [memeToShare], applicationActivities: nil)
+        activity.completionWithItemsHandler = { (activity, success, items, error) in
+            
+            if success {
+                self.save(memedImage: memeToShare)
+            }
+        }
+ 
+        present(activity, animated: true, completion:nil)
+
+    }
+
         
     @IBAction func shareImage(_ sender: Any) {
         
         share()
         
+        showControls()
+           
     }
 
     

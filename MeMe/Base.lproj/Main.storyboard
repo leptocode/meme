@@ -95,6 +95,8 @@
                     <connections>
                         <outlet property="bottomText" destination="VHE-fK-Vss" id="x3X-a7-WPg"/>
                         <outlet property="imageView" destination="Tai-cg-bhy" id="zNG-7m-x1l"/>
+                        <outlet property="pickImage" destination="nIT-YF-HpM" id="hzI-ji-91z"/>
+                        <outlet property="shareImage" destination="T4a-Pn-WSC" id="php-QP-uM2"/>
                         <outlet property="topText" destination="MIu-QR-ykc" id="HUL-pu-6RG"/>
                     </connections>
                 </viewController>

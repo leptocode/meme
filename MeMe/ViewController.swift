@@ -20,13 +20,18 @@ UINavigationControllerDelegate, UITextFieldDelegate {
     
     // Top Text
     @IBOutlet weak var topText: UITextField!
-
     
     // Image
     @IBOutlet weak var imageView: UIImageView!
     
     // Bottom Text
     @IBOutlet weak var bottomText: UITextField!
+    
+    // MARK: vars
+    var memedImage = UIImage()
+    var meme:Meme!
+    
+    var selectedTextField: UITextField?
     
     
     // MARK: CUSTOM DELEGATES ***********************************
@@ -45,7 +50,10 @@ UINavigationControllerDelegate, UITextFieldDelegate {
         // set bottom text delegate
         self.bottomText.delegate = emojiDelegate
         
-        // keyboard management
+
+        
+        
+    // keyboard management
 
     }
     
@@ -56,35 +64,25 @@ UINavigationControllerDelegate, UITextFieldDelegate {
     func unsubscribeFromKeyboardNotifications() {
     NotificationCenter.default.addObserver(self, selector: #selector(ViewController.keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
     }
+    
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         subscribeToKeyboardNotification()
-    }
-
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillAppear(animated)
         unsubscribeFromKeyboardNotifications()
     }
 
-    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        topText.resignFirstResponder()
-        bottomText.resignFirstResponder()
-        return true
-    }
-    
-
-    
     @objc func keyboardWillShow(_ notification:Notification) {
-        
-        view.frame.origin.y = -getKeyboardHeight(notification)
+        if bottomText.isEditing {
+            view.frame.origin.y = -getKeyboardHeight(notification)
+        }
     }
-
+    
     @objc func keyboardWillHide(_ notification:Notification) {
-        
-        view.frame.origin.y = 0
-    }
-
+           if bottomText.isFirstResponder {
+               view.frame.origin.y = 0
+           }
+       }
     
     func getKeyboardHeight(_ notification:Notification) -> CGFloat {
         let userInfo = notification.userInfo
@@ -110,6 +108,9 @@ UINavigationControllerDelegate, UITextFieldDelegate {
     // Top Text
     @IBAction func topTextEdit(_ sender: Any) {
         
+    }
+    
+    @IBAction func bottomText(_ sender: Any) {
     }
     
     
@@ -154,6 +155,7 @@ UINavigationControllerDelegate, UITextFieldDelegate {
     
     }
     
+    
     // assign image to imageView
     
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
@@ -182,24 +184,67 @@ UINavigationControllerDelegate, UITextFieldDelegate {
     
     // CREATE MEME *******************************************
     
-//    func save() {
-//            // Create the meme
-//            let meme = Meme(topString: topText.text!, bottomString: bottomText.text!, middleImage: imageView.image!, memedImage: memedImage)
-//    }
+    func save(memedImage: UIImage) {
+        let meme = Meme(topText: topText.text!, bottomText: bottomText.text!, imageView: imageView.image, memedImage: memedImage)
+        self.meme = meme
+        (UIApplication.shared.delegate as! AppDelegate).memes.append(meme)
+    }
+    
+    func hideControls() {
+        
+        
+        for view in self.view.subviews as [UIView] {
+            if let button = view as? UIButton {
+                button.isHidden = true
+            }
+        }
+    }
+    
+    func showControls() {
+        for view in self.view.subviews as [UIView] {
+            if let button = view as? UIButton {
+                button.isHidden = false
+            }
+        }
+    }
+
+    
+    func share() {
+        
+        
+        let memeToShare = generateMemedImage()
+        let activity = UIActivityViewController(activityItems: [memeToShare], applicationActivities: nil)
+        activity.completionWithItemsHandler = { (activity, success, items, error) in
+            
+            if success {
+                self.save(memedImage: memeToShare)
+            }
+        }
+        present(activity, animated: true, completion:nil)
+    }
+
     
     func generateMemedImage() -> UIImage {
 
-        // TODO: Hide toolbar and navbar
+        // Hide toolbar
+        
+        hideControls()
 
         // Render view to an image
         UIGraphicsBeginImageContext(self.view.frame.size)
         view.drawHierarchy(in: self.view.frame, afterScreenUpdates: true)
         let memedImage:UIImage = UIGraphicsGetImageFromCurrentImageContext()!
         UIGraphicsEndImageContext()
-
-        // TODO: Show toolbar and navbar
-
+        
         return memedImage
+
     }
+        
+    @IBAction func shareImage(_ sender: Any) {
+        
+        share()
+        
+    }
+
     
 }

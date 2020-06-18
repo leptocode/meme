@@ -11,7 +11,10 @@ import UIKit
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
-
+    var window: UIWindow?
+    var memes = [Meme]()
+    
+    var editorMeme = Meme(topText: "TOP TEXT", bottomText: "BOTTOM TEXT", imageView: UIImage(), memedImage: UIImage())
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.

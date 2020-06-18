@@ -73,8 +73,8 @@
 		CC6BCAF82498F4A500E613C8 /* Text field delegates */ = {
 			isa = PBXGroup;
 			children = (
-				CC6BCAF92498F4D400E613C8 /* EmojiTextFieldDelegate.swift */,
 				CC6BCAFB2498F4E600E613C8 /* ColorizerTextFieldDelegate.swift */,
+				CC6BCAF92498F4D400E613C8 /* EmojiTextFieldDelegate.swift */,
 			);
 			path = "Text field delegates";
 			sourceTree = "<group>";

@@ -11,10 +11,8 @@ import UIKit
 
 struct Meme {
     
-    
-    var topString = ""
-    var middleImage: UIImage? = nil
-    var bottomString = ""
-    var memedImage: UIImage? = nil
-    
+    var topText: String!
+    var bottomText: String!
+    var imageView: UIImage!
+    var memedImage: UIImage!
 }

@@ -33,6 +33,14 @@ UINavigationControllerDelegate, UITextFieldDelegate {
     // Share Button
     @IBOutlet weak var shareImage: UIButton!
     
+    // ToolBar
+    @IBOutlet weak var toolBar: UIToolbar!
+    
+    // Cancel Actions
+    @IBOutlet weak var cancelActions: UIToolbar!
+    
+    // Top Toolbar
+    @IBOutlet weak var toolBarTop: UIToolbar!
     
     // MARK: vars
     var memedImage = UIImage()
@@ -201,6 +209,9 @@ UINavigationControllerDelegate, UITextFieldDelegate {
         
         self.pickImage.isHidden = true
         self.shareImage.isHidden = true
+        self.toolBar.isHidden = true
+        self.cancelActions.isHidden = true
+        self.toolBarTop.isHidden = true
         
         for view in self.view.subviews as [UIView] {
             if let button = view as? UIButton {
@@ -213,7 +224,11 @@ UINavigationControllerDelegate, UITextFieldDelegate {
 
         self.pickImage.isHidden = false
         self.shareImage.isHidden = false
+        self.toolBar.isHidden = false
+        self.cancelActions.isHidden = false
+        self.toolBarTop.isHidden = false
 
+        
         for view in self.view.subviews as [UIView] {
             if let button = view as? UIButton {
                 button.isHidden = false
@@ -253,14 +268,20 @@ UINavigationControllerDelegate, UITextFieldDelegate {
         present(activity, animated: true, completion:nil)
 
     }
-
-        
+    
+    
+    @IBAction func cancelActions(_ sender: Any) {
+          dismiss(animated: true, completion: nil)
+    }
+    
+    
+    
     @IBAction func shareImage(_ sender: Any) {
         
         share()
         
         showControls()
-           
+        
     }
 
     
